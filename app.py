@@ -1,18 +1,37 @@
 from flask import Flask, render_template, request, redirect, flash
 from flask_mail import Mail, Message
-from config import Config
-from models import db, Produto, Resposta
+import sqlite3
+import os
 
 app = Flask(__name__)
-app.config.from_object(Config)
 app.secret_key = "chave_secreta"
 
-db.init_app(app)
+# Configurar e-mail (adapte conforme seu provedor SMTP)
+app.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USERNAME='seuemail@gmail.com',
+    MAIL_PASSWORD='sua_senha',
+)
 mail = Mail(app)
+
+# Caminho do banco SQLite
+DATABASE = os.path.join(os.path.dirname(__file__), 'banco.db')
+
+def get_db():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    produtos = Produto.query.all()
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM produtos")
+    produtos = cursor.fetchall()
+
     if request.method == "POST":
         nome = request.form['nome']
         email = request.form['email']
@@ -22,27 +41,23 @@ def index():
         observacao = request.form['observacao']
         produto_id = int(request.form['produto'])
 
-        resposta = Resposta(
-            nome=nome,
-            email=email,
-            atendimento=atendimento,
-            tempo=tempo,
-            satisfacao=satisfacao,
-            observacao=observacao,
-            produto_id=produto_id
-        )
-        db.session.add(resposta)
-        db.session.commit()
+        cursor.execute('''
+            INSERT INTO respostas (nome, email, atendimento, tempo, satisfacao, observacao, produto_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (nome, email, atendimento, tempo, satisfacao, observacao, produto_id))
 
-        # Enviar e-mail
+        conn.commit()
+        conn.close()
+
         msg = Message("Confirmação de Pesquisa de Satisfação",
-                      sender="seuemail@gmail.com",
+                      sender=app.config['MAIL_USERNAME'],
                       recipients=[email])
         msg.body = f"Olá {nome},\n\nObrigado por responder nossa pesquisa!"
         mail.send(msg)
 
         flash("Resposta enviada com sucesso! Verifique seu e-mail.", "success")
         return redirect("/")
+
     return render_template("form.html", produtos=produtos)
 
 if __name__ == "__main__":
