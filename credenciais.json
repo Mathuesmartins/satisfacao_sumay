@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "pesquisa-de-satisfacao-460616",
+  "private_key_id": "f31806ebde252e109f17d71eb9d25343b724a2ba",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCZU0ZGkG6rH49q\n/Cpji9bmJPuvl1pnh+uuJHfGZjmyTooQCJaXONx/Yes+CVhYLG19vK6AnXWj4AhG\np1fn4QBjETqYMMe8FxTTtyK55NsV3p8avK0RCgffese+FK6UN1t5a2b0kUHl1Xlu\nVlXcqdMtT3Dpr57l3TUUiCpF/kZVurU5UvH2s1I4XahY+izppJiJwuLxjy8hvWkJ\n7WCvzpEAD3fYEVIhckxsSI9nOoIogAAl2a5GgALniw3ZabSOE1r2N5V7En4rkTUT\nDr4+bvsYX0xWJdLGhYhYKZ+h8pmkMOqQnWwKG8fTXFWUr9bvBogQMOD8h055jYcQ\nwX2kTDuTAgMBAAECggEAL5iuyav/dubStjL2k7Vu7j3P1dgFy/rhOkt+1RuZ0JTZ\n/hU0blhL9s02YikzgBe2m6BNiYaX5Nngp9I+EzEBVj+ccW8/Kc/+eqSwxoVZT4Yu\n3PVyQkZbYFA0nni8Iy22G1Cwgr5u9wKYchyiBeDAOiIdmqWWjaPoXOnSOa0wN19F\n4nIJhPcMDxlwuG5d8AoZ8NSmt9Mzn6XNCLsqDyR8PxIRcV0kxfI9FtslA/UH1/7E\n2HXMEaDuc3iZ+QJNNqXfhTsQ/hs65lxQ+L7UF9YezI4lkRklhrJph7Vk2B6ky9ZB\n0au25vJsFT09+FTNWGW6IaluyZoJcguEUdW1v/64fQKBgQDLpJ7diaoMMWeYuoad\n3pLBu7Iwto31ZzmyOK4bmHz+YXlvcMuoeeGEefvQugUgZhH45MzYLwP8RHR277hS\n7ICNyBaIWEVAZeYglldU4bS4LgE8oBjnNXD8hHFCI4/JDIHmnDYN0QKY/I/De3nC\nhiEER/tyhtQMwI88hdBRCFTaFQKBgQDAvtbl6XIuCQ5pcJjQKapV9aamdYsIGiRT\nEcv3RB7p+MKO+dJnmP52Z+MpDdwjPUDmh0m+w2jSqCicA5RZWIBbzcP1JM/vHPMF\nRfNKf+0yWo3Z3UN0Vgi75L8L1z4nkXXnhhRmQv9PuS4p7VYYeLzqH4EVJ+5/gvyJ\nmweG/5txBwKBgQCsDq7bZxDxtFxfQlmy0PcWEMwBNHzEty6cUh9o2XHiS+EaMycf\ndbsA/z+vnzvtn8/Xhxk8Hp0za3Mremc2SPRk1oWTNWFtg6roJZ4r7XePle8dlfb0\ngsav1AcNZpZ5u8OVYK6bBdk4AUxGUfESVdlXkKn2ncxT6e4bqMPVc0Cd8QKBgQCy\nFaFoe/DLKALw2N/YNSb0lSuM0T3MFptJRUA3DfGiK/1XLOuCXJF/xSzVWcDzrjyw\nwn8YimPnfwdGXuhKRMMUD2HmtkSIoS7IyICpbNkzlQdLLGyOqI8ZS5hY0F7VIEjX\nycI/WdebSXWlt2u84JFroAAcE/EAT34Vhe/Gg5STMQKBgAo5WYX3dVvVbNXdTKx+\nVpiGffXhWZMVpkk9XuzmvvrBheU4q5YfBF1cq0VYFuuD822eWzY/YpFJRfaCHTU8\nttm40/lUUzJEV1vsm2LC7wRE9MsnRkRgLtCOyFBn72eWzQpWNS+ifl+A0qnntapD\nWFLB1bVjyUXl6GJ11WhV9FWh\n-----END PRIVATE KEY-----\n",
+  "client_email": "sumaydobr@projeto-id.iam.gserviceaccount.com",
+  "client_id": "103020127045812697057",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pesquisa-de-satisfacao%40pesquisa-de-satisfacao-460616.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
