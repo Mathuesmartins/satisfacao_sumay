@@ -1,0 +1,3 @@
+git add .
+git commit -m "Descreva o que foi alterado, ex: Corrige layout do formulário"
+git push origin master
