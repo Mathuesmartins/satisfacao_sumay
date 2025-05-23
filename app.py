@@ -1,21 +1,10 @@
-from flask import Flask, render_template, request, redirect, flash
-from flask_mail import Mail, Message
+from flask import Flask, render_template, request, redirect, flash, send_file, session, url_for
 import sqlite3, os
-
-from google_sheets import adicionar_resposta_na_planilha
+import pandas as pd
+from io import BytesIO
 
 app = Flask(__name__)
 app.secret_key = "chave_secreta"
-
-# Configuração de e-mail (use credenciais corretas)
-app.config.update(
-    MAIL_SERVER='smtp.gmail.com',
-    MAIL_PORT=587,
-    MAIL_USE_TLS=True,
-    MAIL_USERNAME='sumaydobr@gmail.com',
-    MAIL_PASSWORD='Sumay2025!',
-)
-mail = Mail(app)
 
 DATABASE = os.path.join(os.path.dirname(__file__), 'banco.db')
 
@@ -28,7 +17,6 @@ def get_db():
 def index():
     conn = get_db()
     cursor = conn.cursor()
-
     cursor.execute("SELECT * FROM produtos")
     produtos = cursor.fetchall()
 
@@ -48,22 +36,41 @@ def index():
         conn.commit()
         conn.close()
 
-        # Salvar também no Google Sheets
-        adicionar_resposta_na_planilha([
-            nome, email, atendimento, tempo, satisfacao, observacao, produto_id
-        ])
-
-        # E-mail de confirmação
-        msg = Message("Confirmação de Pesquisa",
-                      sender=app.config['MAIL_USERNAME'],
-                      recipients=[email])
-        msg.body = f"Olá {nome}, obrigado por responder nossa pesquisa!"
-        mail.send(msg)
-
         flash("Resposta enviada com sucesso!", "success")
         return redirect("/")
 
     return render_template("form.html", produtos=produtos)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        usuario = request.form["usuario"]
+        senha = request.form["senha"]
+        if usuario == "sumay" and senha == "Sumay2025!":
+            session["logado"] = True
+            return redirect("/relatorio")
+        else:
+            flash("Usuário ou senha inválidos", "danger")
+    return render_template("login.html")
+
+@app.route("/relatorio")
+def relatorio():
+    if not session.get("logado"):
+        return redirect(url_for("login"))
+
+    conn = get_db()
+    df = pd.read_sql_query("""
+        SELECT respostas.*, produtos.nome AS produto_nome 
+        FROM respostas
+        JOIN produtos ON respostas.produto_id = produtos.id
+    """, conn)
+
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Respostas')
+
+    output.seek(0)
+    return send_file(output, download_name="relatorio.xlsx", as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,29 +1,120 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Pesquisa de Satisfação</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Satisfação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fcf9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: #05739e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            resize: vertical;
+
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .logo {
+            max-width: 150px;
+            margin-left: 200px;
+            width: 100px;
+            margin-bottom: 10px;
+
+        .message {
+            color: green;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <h1>Pesquisa de Satisfação</h1>
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% for category, message in messages %}
-      <p style="color: green;">{{ message }}</p>
-    {% endfor %}
-  {% endwith %}
-  <form method="post">
-    <input name="nome" placeholder="Nome" required><br>
-    <input name="email" placeholder="Email" required><br>
-    <select name="produto" required>
-      {% for produto in produtos %}
-        <option value="{{ produto.id }}">{{ produto.nome }}</option>
-      {% endfor %}
-    </select><br>
-    Atendimento: <input type="number" name="atendimento" min="1" max="5"><br>
-    Tempo: <input type="number" name="tempo" min="1" max="5"><br>
-    Satisfação: <input type="number" name="satisfacao" min="1" max="5"><br>
-    <textarea name="observacao" placeholder="Observações"></textarea><br>
-    <button type="submit">Enviar</button>
-  </form>
+    <div class="form-container">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo da Marca" class="logo">
+        <h1>Formulário de Satisfação</h1>
+        <form method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="atendimento">Atendimento (1-10):</label>
+            <input type="number" id="atendimento" name="atendimento" min="1" max="10" required>
+
+            <label for="tempo">Tempo de Espera (1-10):</label>
+            <input type="number" id="tempo" name="tempo" min="1" max="10" required>
+
+            <label for="satisfacao">Satisfação Geral (1-10):</label>
+            <input type="number" id="satisfacao" name="satisfacao" min="1" max="10" required>
+
+            <label for="produto">Produto:</label>
+            <select id="produto" name="produto" required>
+                {% for produto in produtos %}
+                <option value="{{ produto.id }}">{{ produto.nome }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="observacao">Observação:</label>
+            <textarea id="observacao" name="observacao" rows="4"></textarea>
+
+            <input type="submit" value="Enviar">
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+    </div>
 </body>
 </html>
